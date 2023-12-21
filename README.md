@@ -58,4 +58,5 @@ Make sure you have the following installed:
 
 ## Screenshots
 
-![image](https://github.com/AashiGoel/YouTube-Audio-and-Video-Downloader/assets/97473701/910ab2a5-06c0-4197-a6ee-58751a81b28b)
+![Screenshot (1267)](https://github.com/AashiGoel/YouTube-Audio-and-Video-Downloader/assets/97473701/45abea49-0ec1-440e-9255-d0b0be3be6d1)
+
