@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Audio and Video Downloader</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+        form {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 12px;
+            width: 400px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff6600;
+        }
+        ::placeholder {
+            color: #999;
+            opacity: 0.8;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #e65200;
+        }
+        #processing,
+        #result {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Download Audio and Video from YouTube</h1>
+        <form action="/process" method="post">
+            <input type="text" id="user_input" name="user_input" placeholder="Enter YouTube Video Link" required autofocus>
+            <button type="submit">Download</button>
+        </form>
+        <div id="processing">Please wait while we download the video and audio. This might take a minute.</div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            document.getElementById('processing').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            const formData = new FormData(this);
+            document.getElementById('user_input').value = '';
+            const response = await fetch('/process', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('processing').style.display = 'none';
+            document.getElementById('result').innerHTML = `
+                <p> Video and Audio Downloaded! <p>
+                <p>Title: ${result['Title']}</p>
+                <p>Views: ${result['Views']}</p>
+                <img src="${result['Image_URL']}" alt="Thumbnail" />
+            `;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
