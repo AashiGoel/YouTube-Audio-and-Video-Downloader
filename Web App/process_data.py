@@ -10,6 +10,7 @@ if len(argv)>1:
 def process_input(link):
     yt = YouTube(link)
     yd = yt.streams.get_highest_resolution()
+    yd.bitrate = 30
     loc=yd.download(output_path=os.path.join(os.curdir,'videos'))
     video = moviepy.editor.VideoFileClip(loc)
     audio = video.audio
